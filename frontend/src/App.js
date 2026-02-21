@@ -86,7 +86,7 @@ function App() {
 
       // Submit to backend with blockchain transaction hash
       console.log("💾 Saving to backend database...");
-      const backendResponse = await fetch(`${BACKEND_API}/reports`, {
+      const backendResponse = await fetch(getBackendUrl('/reports'), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -142,23 +142,72 @@ function App() {
     setError(null);
 
     try {
-      console.log("📝 Loading reports from backend...", { BACKEND_API });
-      const response = await fetch(`${BACKEND_API}/reports`);
-      console.log("📊 Backend response received:", { status: response.status });
+      console.log("📝 Loading reports from backend/chain...", { BACKEND_API, CONTRACT_ADDRESS });
 
-      if (!response.ok) {
-        throw new Error("Failed to fetch reports from backend");
+      // Try to fetch from on-chain contract first when possible
+      let chainReports = [];
+      if (CONTRACT_ADDRESS && window.ethereum) {
+        try {
+          console.log("🔗 Attempting to load reports from blockchain...");
+          const provider = new ethers.BrowserProvider(window.ethereum);
+          const contract = new ethers.Contract(CONTRACT_ADDRESS, VoiceItABI.abi, provider);
+          const raw = await contract.getReports();
+          // raw is an array of structs: [ { sender, content, timestamp }, ... ]
+          chainReports = raw.map((r, idx) => ({
+            id: `chain_${idx}_${r.timestamp}`,
+            walletAddress: r.sender,
+            content: r.content,
+            timestamp: new Date(Number(r.timestamp) * 1000),
+            anonId: `User-${String(r.sender).slice(2, 8).toUpperCase()}`,
+            transactionHash: null,
+          }));
+          console.log("✅ Loaded reports from chain:", chainReports.length);
+        } catch (chainErr) {
+          console.warn("⚠️ Could not load chain reports:", chainErr.message || chainErr);
+          chainReports = [];
+        }
       }
 
-      const result = await response.json();
+      // Then fetch backend reports (file DB) to augment with transaction hashes and metadata
+      const response = BACKEND_API
+        ? await fetch(getBackendUrl('/reports'))
+        : null;
+      let result = { success: false, data: [] };
+      if (response) {
+        console.log("📊 Backend response received:", { status: response.status });
+        if (!response.ok) throw new Error("Failed to fetch reports from backend");
+        result = await response.json();
+      }
       console.log("✅ Reports loaded:", {
         count: result.data?.length,
         hasData: !!result.data,
       });
 
-      if (result.success && result.data) {
-        // Format reports for display
-        const formattedReports = result.data.map((report) => ({
+      // Use chain-first list when available; otherwise fallback to backend
+      let formattedReports = [];
+      if (chainReports.length > 0) {
+        // Merge backend info (like transactionHash) when possible
+        const backendMap = new Map();
+        if (result.success && result.data) {
+          for (const b of result.data) {
+            backendMap.set(`${b.walletAddress}::${b.content}`, b);
+          }
+        }
+
+        formattedReports = chainReports.map((c) => {
+          const key = `${c.walletAddress}::${c.content}`;
+          const b = backendMap.get(key);
+          return {
+            id: c.id,
+            walletAddress: c.walletAddress,
+            content: c.content,
+            timestamp: c.timestamp,
+            anonId: c.anonId,
+            transactionHash: (b && b.transactionHash) || c.transactionHash || null,
+          };
+        });
+      } else if (result.success && result.data) {
+        formattedReports = result.data.map((report) => ({
           id: report._id,
           walletAddress: report.walletAddress,
           content: report.content,
@@ -166,12 +215,10 @@ function App() {
           anonId: report.anonId,
           transactionHash: report.transactionHash,
         }));
-
-        console.log("🎯 Formatted reports for display:", {
-          count: formattedReports.length,
-        });
-        setReports(formattedReports);
       }
+
+      console.log("🎯 Formatted reports for display:", { count: formattedReports.length });
+      setReports(formattedReports);
     } catch (err) {
       console.error("❌ Failed to fetch reports:", err);
       setError(
@@ -180,6 +227,26 @@ function App() {
       );
     } finally {
       setFetchingReports(false);
+    }
+  }
+
+  // Helper to format backend URL robustly
+  function getBackendUrl(path) {
+    if (!BACKEND_API) return path;
+    const trimmed = BACKEND_API.replace(/\/$/, "");
+    // If user provided full /api prefix already, don't double-add
+    if (trimmed.endsWith("/api")) return `${trimmed}${path}`;
+    return `${trimmed}/api${path}`;
+  }
+
+  function formatWallet(addr) {
+    if (!addr) return "Unknown";
+    try {
+      const a = String(addr);
+      if (a.length <= 10) return a;
+      return `${a.slice(0, 6)}...${a.slice(-4)}`;
+    } catch (e) {
+      return addr;
     }
   }
 
@@ -562,14 +629,13 @@ function App() {
                       </div>
                       <div style={styles.reportContent}>{r.content}</div>
                       <div style={styles.reportWallet}>
-                        💼 Wallet: {r.walletAddress}
+                        💼 Wallet: {formatWallet(r.walletAddress)}
                       </div>
                       {r.transactionHash && (
                         <div
                           style={{ ...styles.reportWallet, marginTop: "8px" }}
                         >
-                          🔗 Tx: {r.transactionHash.slice(0, 10)}...
-                          {r.transactionHash.slice(-10)}
+                          🔗 Tx: {r.transactionHash.slice(0, 10)}...{r.transactionHash.slice(-10)}
                         </div>
                       )}
                     </div>
