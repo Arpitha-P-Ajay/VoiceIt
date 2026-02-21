@@ -14,6 +14,7 @@
 
 ### Hosted Project Link
 Project Status: Working Prototype
+
 Due to the complex local blockchain environment (Hardhat Node) and specialized MetaMask configurations required for this dApp, we have prioritized a fully functional Local Development Prototype. You can witness the end-to-end workflow, including real-time blockchain transactions, in our Project Demo Video below.
 
 ### Project Description
