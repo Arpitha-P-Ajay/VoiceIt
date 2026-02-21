@@ -1,6 +1,4 @@
 
-https://github.com/user-attachments/assets/448c7acf-d16b-4e13-b08e-51017b80b684
-<img width="1914" height="1004" alt="Screenshot 2026-02-21 092956" src="https://github.com/user-attachments/assets/b1c5a33f-75c0-4dd9-829d-f1b020d9d1f8" /><p align="center">
   <img src="./img.png" alt="Project Banner" width="100%">
 </p>
 
