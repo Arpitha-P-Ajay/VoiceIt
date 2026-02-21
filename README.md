@@ -116,7 +116,7 @@ npm start
 
 #### API Documentation
 
-**Base URL:** `https://api.yourproject.com](http://localhost:5000/api`
+**Base URL:** `http://localhost:5000/api`
 
 ##### Endpoints
 
