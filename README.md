@@ -1,4 +1,6 @@
-<p align="center">
+
+https://github.com/user-attachments/assets/448c7acf-d16b-4e13-b08e-51017b80b684
+<img width="1914" height="1004" alt="Screenshot 2026-02-21 092956" src="https://github.com/user-attachments/assets/b1c5a33f-75c0-4dd9-829d-f1b020d9d1f8" /><p align="center">
   <img src="./img.png" alt="Project Banner" width="100%">
 </p>
 
@@ -82,13 +84,18 @@ npm start
 
 #### Screenshots (Add at least 3)
 
-![Screenshot1](Add screenshot 1 here with proper name)
+<img width="1920" height="1080" alt="Screenshot (434)" src="https://github.com/user-attachments/assets/e99c9219-4f6f-4af7-b35b-f12642eddec0" />
+
 *The Submit Report interface where users enter their concerns and sign via MetaMask.*
 
-![Screenshot2](Add screenshot 2 here with proper name)
+<img width="1914" height="1004" alt="Screenshot 2026-02-21 092956" src="https://github.com/user-attachments/assets/6d57e1fd-0271-40c0-980f-2e901c58047a" />
+
+<img width="1919" height="1068" alt="Screenshot 2026-02-21 091834" src="https://github.com/user-attachments/assets/bed62649-2d38-4519-ad24-66ad47921127" />
+
 *The MetaMask interaction showing the transaction request to the VoiceIt smart contract.*
 
-![Screenshot3](Add screenshot 3 here with proper name)
+<img width="1919" height="1078" alt="Screenshot 2026-02-21 091945" src="https://github.com/user-attachments/assets/da3cf1fe-bf8d-4511-94bd-eae6ce078c84" />
+
 *The View Reports tab displaying the list of anonymous reports fetched from MongoDB.*
 
 #### Diagrams
@@ -336,7 +343,11 @@ python script.py -v --format json data.json
 ## Project Demo
 
 ### Video
-[Add your demo video link here - YouTube, Google Drive, etc.]
+
+
+https://github.com/user-attachments/assets/a98bab66-de4d-4c0f-bd18-7b4c90ea75a8
+
+
 
 *Explain what the video demonstrates - key features, user flow, technical highlights*
 
