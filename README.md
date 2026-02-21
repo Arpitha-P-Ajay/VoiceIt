@@ -2,27 +2,27 @@
   <img src="./img.png" alt="Project Banner" width="100%">
 </p>
 
-# [Project Name] 🎯
+# VoiceIt 🎯
 
 ## Basic Details
 
-### Team Name: [Name]
+### Team Name: Codeilla
 
 ### Team Members
-- Member 1: [Name] - [College]
-- Member 2: [Name] - [College]
+- Member 1: Aiswarya V S - LBS Institute Of Technology For Women
+- Member 2: Arpitha P Ajay - LBS Institute Of Technology For Women
 
 ### Hosted Project Link
 [mention your project hosted link here]
 
 ### Project Description
-[2-3 lines about what your project does]
+VoiceIt is a decentralized, anonymous platform that allows citizens to report social issues and concerns without fear of retaliation. By combining blockchain transparency with a secure backend, it ensures that every voice is heard and every report is immutable.
 
 ### The Problem statement
-[What problem are you solving?]
+Many individuals hesitate to report local issues, corruption, or safety concerns due to fear of being identified or the data being tampered with by centralized authorities. Traditional reporting systems lack transparency and trust.
 
 ### The Solution
-[How are you solving it?]
+VoiceIt solves this by using a Hardhat-based Smart Contract to store report hashes on-chain, ensuring they cannot be deleted or altered. A Node.js/MongoDB backend handles the storage of detailed report content while maintaining a link to the blockchain transaction for verification.
 
 ---
 
@@ -31,26 +31,20 @@
 ### Technologies/Components Used
 
 **For Software:**
-- Languages used: [e.g., JavaScript, Python, Java]
-- Frameworks used: [e.g., React, Django, Spring Boot]
-- Libraries used: [e.g., axios, pandas, JUnit]
-- Tools used: [e.g., VS Code, Git, Docker]
-
-**For Hardware:**
-- Main components: [List main components]
-- Specifications: [Technical specifications]
-- Tools required: [List tools needed]
+- Languages used: JavaScript (ES6+), Solidity
+- Frameworks used: React.js, Hardhat
+- Libraries used: ethers.js, axios, mongoose
+- Tools used: VS Code, MetaMask, MongoDB
 
 ---
 
 ## Features
 
 List the key features of your project:
-- Feature 1: [Description]
-- Feature 2: [Description]
-- Feature 3: [Description]
-- Feature 4: [Description]
-
+- Feature 1: Blockchain Immutability: Every report is recorded on a local Ethereum node to prevent data tampering.
+- Feature 2: Anonymous Reporting: Users are assigned unique "Anon IDs" derived from their wallet addresses without revealing personal identity.
+- Feature 3: Real-time Feed: A dynamic view tab that fetches all submitted reports from the database and verifies them against the blockchain.
+- Feature 4: Secure Transaction Signing: Full integration with MetaMask for user-authorized data submission.
 ---
 
 ## Implementation
@@ -59,23 +53,28 @@ List the key features of your project:
 
 #### Installation
 ```bash
-[Installation commands - e.g., npm install, pip install -r requirements.txt]
+# Install frontend and backend dependencies
+npm install
+
+# Install Hardhat toolbox
+npm install --save-dev @nomicfoundation/hardhat-toolbox
 ```
 
 #### Run
 ```bash
-[Run commands - e.g., npm start, python app.py]
+# Terminal 1: Start Local Blockchain
+npx hardhat node
+
+# Terminal 2: Deploy Smart Contract
+npx hardhat run scripts/deploy.js --network localhost
+
+# Terminal 3: Start Backend Server
+cd backend
+node server.js
+
+# Terminal 4: Start React Frontend
+npm start
 ```
-
-### For Hardware:
-
-#### Components Required
-[List all components needed with specifications]
-
-#### Circuit Setup
-[Explain how to set up the circuit]
-
----
 
 ## Project Documentation
 
@@ -84,13 +83,13 @@ List the key features of your project:
 #### Screenshots (Add at least 3)
 
 ![Screenshot1](Add screenshot 1 here with proper name)
-*Add caption explaining what this shows*
+*The Submit Report interface where users enter their concerns and sign via MetaMask.*
 
 ![Screenshot2](Add screenshot 2 here with proper name)
-*Add caption explaining what this shows*
+*The MetaMask interaction showing the transaction request to the VoiceIt smart contract.*
 
 ![Screenshot3](Add screenshot 3 here with proper name)
-*Add caption explaining what this shows*
+*The View Reports tab displaying the list of anonymous reports fetched from MongoDB.*
 
 #### Diagrams
 
@@ -106,30 +105,6 @@ List the key features of your project:
 
 ---
 
-### For Hardware:
-
-#### Schematic & Circuit
-
-![Circuit](Add your circuit diagram here)
-*Add caption explaining connections*
-
-![Schematic](Add your schematic diagram here)
-*Add caption explaining the schematic*
-
-#### Build Photos
-
-![Team](Add photo of your team here)
-
-![Components](Add photo of your components here)
-*List out all components shown*
-
-![Build](Add photos of build process here)
-*Explain the build steps*
-
-![Final](Add photo of final product here)
-*Explain the final build*
-
----
 
 ## Additional Documentation
 
